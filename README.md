@@ -1,3 +1,4 @@
+
 # MovoInterface
 
 ## Requirements
@@ -81,7 +82,11 @@ and
 methods only work when using the KG3 gripper provided by Kinova. The RobotiQ gripper is controlled via the RobotiQInterface below. 
 
 ## MovoMobileBase
-The MovoMobileBase in ```<MovoInterface>/plugins/shared/MovoRobotInterface/MovoRobotInterface.hpp``` is a small interface to control the mobile base. 
+The MovoMobileBase in ```<MovoInterface>/plugins/shared/MovoRobotInterface/MovoMobileBase.hpp``` is a small interface to control the mobile base. The 
+
+    moveToPose(const oppt::geometric::Pose &pose)
+
+method can be used to move the mobile base to the given pose. The ```pose``` parameter herby specifies the target pose relative to the initial pose of the mobile base. After starting the robot, this initial pose is set to ```(0, 0, 0, 0, 0, 0)```. Note that as of now, only the ```xy```- components of the pose are considered (i.e. the mobile base moves along the xy-plane), whereas the orientation component of the pose is ignored. 
 
 ## RobotiqInterface
 The RobotiqInterface in ```<MovoInterface>/plugins/shared/MovoRobotInterface/MovoRobotInterface.hpp```
@@ -98,3 +103,4 @@ that fully open and close the gripper respectively, and a
     isMoving()
 
 method to determine wheter the fingers are currently moving.
+
