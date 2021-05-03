@@ -129,7 +129,11 @@ private:
         LOGGING("Opening gripper");
         getchar();
         robotiQInterface_->openGripper();
+        LOGGING("Opened gripper");
+        getchar();
         std::this_thread::sleep_for(std::chrono::seconds(1));
+        LOGGING("Moving to initial state");
+        getchar();
         movoRobotInterface_->moveToInitialJointAngles(initialJointAngles);
 
         LOGGING("DONE");
