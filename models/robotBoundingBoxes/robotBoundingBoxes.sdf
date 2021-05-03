@@ -22,7 +22,7 @@
       <collision name='robotBoxBoundingBoxes_collision_7'>
         <laser_retro>0</laser_retro>
         <max_contacts>10</max_contacts>
-        <pose frame=''>0.5 0.14 0.5 0 -0 0</pose>
+        <pose frame=''>0.5 -0.14 0.5 0 -0 0</pose>
         <geometry>
           <box>
             <size>0.7 0.18 0.6</size>
@@ -128,122 +128,7 @@
             </bullet>
           </contact>
         </surface>
-      </collision>
-      <!--visual name='robotBoxBoundingBoxes_visual_4'>
-        <pose frame=''>0 0 0.2 0 -0 0</pose>
-        <geometry>
-          <box>
-            <size>0.8 0.58 0.4</size>
-          </box>
-        </geometry>
-        <material>
-          <shader type='pixel'>
-            <normal_map>__default__</normal_map>
-          </shader>
-          <script>
-            <name>ModelPreview_1::robotBox_link::robotBoxBoundingBoxes_visual_1_MATERIAL_</name>
-            <uri>__default__</uri>
-          </script>
-          <ambient>0 0 0 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
-          <specular>0 0 0 1</specular>
-          <emissive>0 0 0 1</emissive>
-        </material>
-        <transparency>0</transparency>
-        <cast_shadows>1</cast_shadows>
-      </visual>
-      <visual name='robotBoxBoundingBoxes_visual_5'>
-        <pose frame=''>0 0 0.55 0 -0 0</pose>
-        <geometry>
-          <box>
-            <size>0.48 0.5 0.3</size>
-          </box>
-        </geometry>
-        <material>
-          <shader type='pixel'>
-            <normal_map>__default__</normal_map>
-          </shader>
-          <script>
-            <name>ModelPreview_1::robotBox_link::robotBoxBoundingBoxes_visual_1_MATERIAL_</name>
-            <uri>__default__</uri>
-          </script>
-          <ambient>0 0 0 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
-          <specular>0 0 0 1</specular>
-          <emissive>0 0 0 1</emissive>
-        </material>
-        <transparency>0</transparency>
-        <cast_shadows>1</cast_shadows>
-      </visual>
-      <visual name='robotBoxBoundingBoxes_visual_3'>
-        <pose frame=''>0.27 0 1.05 0 -0 0</pose>
-        <geometry>
-          <box>
-            <size>0.11 0.3 0.1</size>
-          </box>
-        </geometry>
-        <material>
-          <shader type='pixel'>
-            <normal_map>__default__</normal_map>
-          </shader>
-          <script>
-            <name>ModelPreview_1::robotBox_link::robotBoxBoundingBoxes_visual_1_MATERIAL_</name>
-            <uri>__default__</uri>
-          </script>
-          <ambient>0 0 0 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
-          <specular>0 0 0 1</specular>
-          <emissive>0 0 0 1</emissive>
-        </material>
-        <transparency>0</transparency>
-        <cast_shadows>1</cast_shadows>
-      </visual>
-      <visual name='robotBoxBoundingBoxes_visual_2'>
-        <pose frame=''>0.28 0 0.89 0 -0 0</pose>
-        <geometry>
-          <box>
-            <size>0.1 0.14 0.29</size>
-          </box>
-        </geometry>
-        <material>
-          <shader type='pixel'>
-            <normal_map>__default__</normal_map>
-          </shader>
-          <script>
-            <name>ModelPreview_1::robotBox_link::robotBoxBoundingBoxes_visual_1_MATERIAL_</name>
-            <uri>__default__</uri>
-          </script>
-          <ambient>0 0 0 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
-          <specular>0 0 0 1</specular>
-          <emissive>0 0 0 1</emissive>
-        </material>
-        <transparency>0</transparency>
-        <cast_shadows>1</cast_shadows>
-      </visual>
-      <visual name='robotBoxBoundingBoxes_visual_1'>
-        <pose frame=''>-0.042 0 0.55 0 -0 0</pose>
-        <geometry>
-          <box>
-            <size>0.4 0.5 1.1</size>
-          </box>
-        </geometry>
-        <material>
-          <shader type='pixel'>
-            <normal_map>__default__</normal_map>
-          </shader>
-          <script>
-            <name>ModelPreview_1::robotBox_link::robotBoxBoundingBoxes_visual_1_MATERIAL_</name>
-            <uri>__default__</uri>
-          </script>
-          <ambient>0 0 0 1</ambient>
-          <diffuse>0 0 0 1</diffuse>
-          <specular>0 0 0 1</specular>
-          <emissive>0 0 0 1</emissive>
-        </material>
-        <transparency>0</transparency>
-        <cast_shadows>1</cast_shadows>
-      </visual-->
+      </collision>     
       <collision name='robotBoxBoundingBoxes_collision_4'>
         <laser_retro>0</laser_retro>
         <max_contacts>10</max_contacts>
@@ -464,7 +349,7 @@
           </contact>
         </surface>
       </collision>
-      <collision name='robotBoxBoundingBoxes_collision_3'>
+      <!--collision name='robotBoxBoundingBoxes_collision_3'>
         <laser_retro>0</laser_retro>
         <max_contacts>10</max_contacts>
         <pose frame=''>0.27 0 1.05 0 -0 0</pose>
@@ -518,7 +403,7 @@
             </bullet>
           </contact>
         </surface>
-      </collision>
+      </collision-->
     </link>
     <static>0</static>
     <allow_auto_disable>1</allow_auto_disable>
