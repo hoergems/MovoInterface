@@ -21,6 +21,7 @@
 #include "MovoTransitionPluginOptions.hpp"
 #include "MovoUserData.hpp"
 #include "MovoRobotInterface/MovoRobotInterface.hpp"
+#include "MovoRobotInterface/RobotiqInterface.hpp"
 #include <chrono>
 
 namespace oppt
@@ -36,18 +37,18 @@ public :
     virtual ~MovoTransitionPlugin() = default;
 
     virtual bool load(const std::string& optionsFile) override {
-        parseOptions_<MovoTransitionPluginOptions>(optionsFile);        
+        parseOptions_<MovoTransitionPluginOptions>(optionsFile);
 
-        auto options = static_cast<const MovoTransitionPluginOptions *>(options_.get());               
+        auto options = static_cast<const MovoTransitionPluginOptions *>(options_.get());
 
         // Get a pointer to the end-effector link
         std::string endEffectorLinkName = options->endEffectorLink;
         endEffectorLink_ = getLinkPointer_(endEffectorLinkName);
         if (!endEffectorLink_)
-            ERROR("End effector link '" + endEffectorLinkName + "' couldn't be found");        
+            ERROR("End effector link '" + endEffectorLinkName + "' couldn't be found");
 
         // Setup the ik solver
-        setupIKSolver_();        
+        setupIKSolver_();
 
         // If this is the execution plugin, initialize the Movo API
         if (robotEnvironment_->isExecutionEnvironment())
@@ -59,7 +60,7 @@ public :
         // First update Gazebo with the world state contained in the current state
         robotEnvironment_->getGazeboInterface()->setWorldState(propagationRequest->currentState->getGazeboWorldState().get());
         VectorFloat currentStateVector = propagationRequest->currentState->as<VectorState>()->asVector();
-        VectorFloat endEffectorVelocity(6, 0.0);           
+        VectorFloat endEffectorVelocity(6, 0.0);
 
         if (robotEnvironment_->isExecutionEnvironment())
         {
@@ -67,13 +68,13 @@ public :
             getchar();
 
         }
-       
-        VectorFloat nextJointAngles = applyEndEffectorVelocity_(currentStateVector, endEffectorVelocity);       
+
+        VectorFloat nextJointAngles = applyEndEffectorVelocity_(currentStateVector, endEffectorVelocity);
 
         PropagationResultSharedPtr propagationResult(new PropagationResult);
         propagationResult->nextState = RobotStateSharedPtr(new VectorState(nextJointAngles));
         propagationResult->nextState->setUserData(makeUserData_());
-        propagationResult->nextState->setGazeboWorldState(robotEnvironment_->getGazeboInterface()->getWorldState(true));        
+        propagationResult->nextState->setGazeboWorldState(robotEnvironment_->getGazeboInterface()->getWorldState(true));
 
         auto userDataNew = makeUserData();
         propagationResult->nextState->setUserData(userDataNew);
@@ -84,33 +85,43 @@ public :
 private:
 
     /** @brief A pointer to the end effector link */
-    gazebo::physics::Link *endEffectorLink_ = nullptr;   
+    gazebo::physics::Link *endEffectorLink_ = nullptr;
 
     /**
      * @brief The default motion distance of the end-effector (in meters) for each directional action
      * This distance can be modified in the configuration file (via transitionPluginOptions.endEffectorMotionDistance)
      */
-    FloatType endEffectorMotionDistance_ = 0.05;    
+    FloatType endEffectorMotionDistance_ = 0.05;
 
     /** @brief The interface to the physical robot */
     std::unique_ptr<MovoRobotInterface> movoRobotInterface_ = nullptr;
-    
+
+    std::unique_ptr<movo::RobotiqInterface> robotiQInterface_ = nullptr;
+
+    std::unique_ptr<ros::NodeHandle> nh_ = nullptr;
+
 
 private:
     /** @brief Initializes the MovoInterface*/
-    void initializeMovoInterface_() {        
+    void initializeMovoInterface_() {
         std::string localIP =
             static_cast<const MovoTransitionPluginOptions *>(options_.get())->localIP;
         movoRobotInterface_ = std::unique_ptr<MovoRobotInterface>(new MovoRobotInterface(robotEnvironment_));
         movoRobotInterface_->init(localIP, MovoArms::LEFT);
 
+        int argc = 0;
+        char** argv;
+        ros::init(argc, argv, "MovoRobotInterface");
+        nh_ = std::make_unique<ros::NodeHandle>("~");
+        robotiQInterface_ = std::unique_ptr<movo::RobotiqInterface>(new movo::RobotiqInterface(nh_.get()));
+
         // Move the arm to the initial joint angles
         VectorFloat initialState = static_cast<const MovoTransitionPluginOptions *>(options_.get())->initialState;
         VectorFloat initialJointAngles(initialState.begin(), initialState.begin() + 7);
         movoRobotInterface_->openGripper();
-        std::this_thread::sleep_for(std::chrono::seconds(1));        
+        std::this_thread::sleep_for(std::chrono::seconds(1));
         movoRobotInterface_->moveToInitialJointAngles(initialJointAngles);
-    }    
+    }
 
 
 
@@ -135,7 +146,7 @@ private:
         VectorFloat newJointAngles = applyJointVelocities_(currentJointAngles, jointVelocities, 1000.0);
 
         // Update the Gazebo model with the next joint angles
-        robotEnvironment_->getGazeboInterface()->setStateVector(newJointAngles);        
+        robotEnvironment_->getGazeboInterface()->setStateVector(newJointAngles);
 
         return newJointAngles;
     }
@@ -156,13 +167,13 @@ private:
      * @brief Apply a vector of joint velocities to the robot for a duration of 'durationMS' (in milliseconds) and return the resulting vector of joint angles
      */
     VectorFloat applyJointVelocities_(const VectorFloat &currentJointAngles, const VectorFloat &jointVelocities, const FloatType &durationMS) const {
-        if (robotEnvironment_->isExecutionEnvironment()) {                 
+        if (robotEnvironment_->isExecutionEnvironment()) {
             movoRobotInterface_->applyJointVelocities(jointVelocities, durationMS);
             return movoRobotInterface_->getCurrentJointAngles();
         }
 
         return addVectors(currentJointAngles, jointVelocities);
-    }     
+    }
 
     /**
      * @brief Initialized the inverse kinematics solver
@@ -211,11 +222,11 @@ private:
 
     GZPose LinkWorldPose(const gazebo::physics::Link* link) const {
         // Returns link world pose according to gazebo api enabled
-    #ifdef GZ_GT_7
+#ifdef GZ_GT_7
         return link->WorldPose();
-    #else
+#else
         return link->GetWorldPose();
-    #endif
+#endif
 
     }
 
