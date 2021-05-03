@@ -330,6 +330,7 @@ int MovoAPI::SetTorqueVibrationController(const float &value) const {
 int MovoAPI::GetAngularForceGravityFree(AngularPosition &position) const {
 	movoAPIMutex_.lock();
 	int res = MyGetAngularForceGravityFree(position);
+	return res;
 }
 
 int MovoAPI::GetCartesianForce(CartesianPosition &position) const {

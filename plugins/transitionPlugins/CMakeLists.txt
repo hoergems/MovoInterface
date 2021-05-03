@@ -1,4 +1,4 @@
-find_package(catkin REQUIRED roscpp actionlib_msgs actionlib manipulator_utils movo_msgs)
+find_package(catkin REQUIRED roscpp actionlib_msgs actionlib movo_msgs)
 
 set (TRANSITION_PLUGIN_SRC
      ${CMAKE_CURRENT_LIST_DIR}/MovoTransitionPlugin.cpp
