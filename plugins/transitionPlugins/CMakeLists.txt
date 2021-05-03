@@ -1,4 +1,4 @@
-find_package(catkin REQUIRED roscpp actionlib_msgs actionlib movo_msgs)
+find_package(catkin REQUIRED roscpp actionlib_msgs actionlib movo_msgs tf)
 
 set (TRANSITION_PLUGIN_SRC
      ${CMAKE_CURRENT_LIST_DIR}/MovoTransitionPlugin.cpp
@@ -16,4 +16,11 @@ target_include_directories(movoTransitionPlugin
                            PRIVATE 
                            ${ROOT_PATH}/plugins/shared/
                            ${catkin_INCLUDE_DIRS})
-#target_link_libraries(movoTransitionPlugin PUBLIC catkin)
+target_link_libraries(movoTransitionPlugin PUBLIC ${catkin_LIBRARIES})
+                           
+ADD_TRANSITION_PLUGIN(movoTransitionPluginPlanning "${TRANSITION_PLUGIN_SRC}")
+target_include_directories(movoTransitionPluginPlanning 
+                           PRIVATE 
+                           ${ROOT_PATH}/plugins/shared/
+                           ${catkin_INCLUDE_DIRS})
+target_link_libraries(movoTransitionPluginPlanning PUBLIC ${catkin_LIBRARIES})

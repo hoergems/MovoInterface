@@ -62,6 +62,8 @@ public :
         VectorFloat currentStateVector = propagationRequest->currentState->as<VectorState>()->asVector();
         VectorFloat endEffectorVelocity(6, 0.0);
 
+        endEffectorVelocity[0] = 0.01;
+
         if (robotEnvironment_->isExecutionEnvironment())
         {
             cout << "Robot Execution : Press Enter to continue" << endl;
@@ -104,10 +106,15 @@ private:
 private:
     /** @brief Initializes the MovoInterface*/
     void initializeMovoInterface_() {
+        LOGGING("Initializing");
+        getchar();
         std::string localIP =
             static_cast<const MovoTransitionPluginOptions *>(options_.get())->localIP;
         movoRobotInterface_ = std::unique_ptr<MovoRobotInterface>(new MovoRobotInterface(robotEnvironment_));
         movoRobotInterface_->init(localIP, MovoArms::LEFT);
+
+        LOGGING("Initialized");
+        getchar();
 
         int argc = 0;
         char** argv;
@@ -118,9 +125,15 @@ private:
         // Move the arm to the initial joint angles
         VectorFloat initialState = static_cast<const MovoTransitionPluginOptions *>(options_.get())->initialState;
         VectorFloat initialJointAngles(initialState.begin(), initialState.begin() + 7);
-        movoRobotInterface_->openGripper();
+
+        LOGGING("Opening gripper");
+        getchar();
+        robotiQInterface_->openGripper();
         std::this_thread::sleep_for(std::chrono::seconds(1));
         movoRobotInterface_->moveToInitialJointAngles(initialJointAngles);
+
+        LOGGING("DONE");
+        getchar();
     }
 
 

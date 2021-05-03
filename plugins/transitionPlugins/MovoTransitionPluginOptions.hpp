@@ -30,9 +30,7 @@ public:
 
   std::string baseLink = "";
 
-  std::string endEffectorLink = "";
-
-  std::string cupLink = "";
+  std::string endEffectorLink = "";  
 
   FloatType endEffectorMotionDistance = 0.0;
 
@@ -56,10 +54,7 @@ public:
                                    &MovoTransitionPluginOptions::baseLink);
     parser->addOption<std::string>("movoOptions",
                                    "endEffectorLink",
-                                   &MovoTransitionPluginOptions::endEffectorLink);
-    parser->addOption<std::string>("movoOptions",
-                                   "cupLink",
-                                   &MovoTransitionPluginOptions::cupLink);
+                                   &MovoTransitionPluginOptions::endEffectorLink);    
     parser->addOption<std::string>("movoOptions",
                                    "localIP",
                                    &MovoTransitionPluginOptions::localIP);

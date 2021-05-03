@@ -1,0 +1,1 @@
+ADD_HEURISTIC_PLUGIN(movoHeuristicPlugin ${CMAKE_CURRENT_LIST_DIR}/MovoHeuristicPlugin.cpp)
