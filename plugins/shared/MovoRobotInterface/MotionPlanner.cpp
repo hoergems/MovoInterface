@@ -62,13 +62,13 @@ void MovoMotionPlanner::setupRRTConnect_() {
 
 	rrtConnect_->setDistanceFunction(distanceFunction);
 
-	VectorString jointNames({"movo::right_shoulder_pan_joint",
-	                         "movo::right_shoulder_lift_joint",
-	                         "movo::right_arm_half_joint",
-	                         "movo::right_elbow_joint",
-	                         "movo::right_wrist_spherical_1_joint",
-	                         "movo::right_wrist_spherical_2_joint",
-	                         "movo::right_wrist_3_joint"
+	VectorString jointNames({"movo::left_shoulder_pan_joint",
+	                         "movo::left_shoulder_lift_joint",
+	                         "movo::left_arm_half_joint",
+	                         "movo::left_elbow_joint",
+	                         "movo::left_wrist_spherical_1_joint",
+	                         "movo::left_wrist_spherical_2_joint",
+	                         "movo::left_wrist_3_joint"
 	                        });
 
 	auto allJoints = robotEnvironment_->getGazeboInterface()->getJoints();
