@@ -82,7 +82,7 @@ void MovoMotionPlanner::setupRRTConnect_() {
 		}
 	}
 
-	if (joint.size() != 7)
+	if (joints.size() != 7)
 		ERROR("Not all joints could be found in your SDF model");
 
 	oppt::IsValidFunction isValidFunction = [this, joints](const RobotStateSharedPtr & state) {
