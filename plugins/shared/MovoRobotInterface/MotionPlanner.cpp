@@ -62,13 +62,13 @@ void MovoMotionPlanner::setupRRTConnect_() {
 
 	rrtConnect_->setDistanceFunction(distanceFunction);
 
-	VectorString jointNames({"movo::left_shoulder_pan_joint",
-	                         "movo::left_shoulder_lift_joint",
-	                         "movo::left_arm_half_joint",
-	                         "movo::left_elbow_joint",
-	                         "movo::left_wrist_spherical_1_joint",
-	                         "movo::left_wrist_spherical_2_joint",
-	                         "movo::left_wrist_3_joint"
+	VectorString jointNames({"movo_robotiq::left_shoulder_pan_joint",
+	                         "movo_robotiq::left_shoulder_lift_joint",
+	                         "movo_robotiq::left_arm_half_joint",
+	                         "movo_robotiq::left_elbow_joint",
+	                         "movo_robotiq::left_wrist_spherical_1_joint",
+	                         "movo_robotiq::left_wrist_spherical_2_joint",
+	                         "movo_robotiq::left_wrist_3_joint"
 	                        });
 
 	auto allJoints = robotEnvironment_->getGazeboInterface()->getJoints();
@@ -81,6 +81,9 @@ void MovoMotionPlanner::setupRRTConnect_() {
 			}
 		}
 	}
+
+	if (joint.size() != 7)
+		ERROR("Not all joints could be found in your SDF model");
 
 	oppt::IsValidFunction isValidFunction = [this, joints](const RobotStateSharedPtr & state) {
 		VectorFloat stateVec = state->as<VectorState>()->asVector();
