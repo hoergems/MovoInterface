@@ -18,7 +18,7 @@ TrajectorySharedPtr MovoMotionPlanner::solve(const VectorFloat &currentJointAngl
 
 	RobotStateSharedPtr goalState(new VectorState(targetJointAngles));
 	if (rrtConnect_->isValid(goalState) == false)
-		ERROR("The initial joint angles are not valid");
+		ERROR("The target joint angles are not valid");
 
 	// Try a linear trajectory first
 	TrajectorySharedPtr linearTrajectory = tryLinearTrajectory(startState, goalState);
