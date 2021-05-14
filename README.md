@@ -1,19 +1,33 @@
 
+
+
 # MovoInterface
 
 ## Requirements
 - Ubuntu 18.04 or higher
-- ROS catkin or higher with the following ROS packages provided by Kinova: 
-	- manipulator_utils 
+- ROS catkin or higher with the following ROS packages provided by Kinova: 	
 	- movo_msgs
 - OPPT v0.5 or higher    
 
 ## Installation:
 
+Clone and build the MovoInterface package:
+
     git clone https://github.com/hoergems/MovoInterface.git
     cd MovoInterface && mkdir build && cd build
     cmake -DCMAKE_INSTALL_PREFIX=<install folder> ..
     make && make install
+    
+Next, navigate to your catkin workspace and simlink the ROS packages inside the ``<MovoInterface>/ROS/`` to your catkin workspace:
+
+	cd <catkin_worspace>/src
+	ln -s <MovoInterface>/ROS/movo_robotiq_gripper .
+	ln -s <MovoInterface>/ROS/movo_ros .
+	
+Finally, build your catkin workspace:
+
+	cd <catkin_workspace>
+	catkin_make 
 
 ## Hardware setup
 First you need to make sure that you're connected to the robot (via Ethernet) and that you can properly communicate with the arm. To do this, connect your laptop via Ethernet. In the network settings of your laptop, use the default settings (i.e. the IPv4 Method should be set to "Automatic (DHCP)"). To test whether you can communicate with the arms, open a terminal and type
@@ -33,7 +47,7 @@ Note the local ip of your network adapter and open the
     <MovoInterface>/cfg/MovoInterface.cfg
 file. Under the [movoOptions] sections, the the localIP parameter to the local ip of your network adapter.
 
-## Preparing the MovoInterface
+## Preparing and running the MovoInterface
 On the MOVO2 computer, open a terminal and run
 
     movostop
@@ -41,9 +55,20 @@ On the MOVO2 computer, open a terminal and run
 Then run
 
     roslaunch movo_bringup_simple main_mobile_base.launch
+
 This will launch the neccessary movo packages on Movo2 (excluding the MoveIt stack).
 
-On your computer, open a terminal and run
+On your computer, open a terminal and source your catkin workspace:
+
+	source <catkin_workspace>/devel/setup.bash
+
+In the same terminal, navigate to the ``<MovoInterface>/script`` folder and execute the ``launchRobotiqGripper.sh`` script:
+
+	cd <MovoInterface>/script
+	./launchRobotiqGripper
+
+This launches the ROS stack to control the RobotiQ gripper.
+Next, open a new terminal on your computer and execute
 
     source <install folder>/share/oppt/setup.sh
 
