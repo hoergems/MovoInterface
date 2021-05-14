@@ -125,23 +125,7 @@ private:
         // Move the arm to the initial joint angles
         VectorFloat initialState = static_cast<const MovoTransitionPluginOptions *>(options_.get())->initialState;
         VectorFloat initialJointAngles(initialState.begin(), initialState.begin() + 7);
-
-        LOGGING("Opening gripper");
-        getchar();
-        robotiQInterface_->openGripper();
-        LOGGING("Opened gripper");
-        getchar();
-        std::this_thread::sleep_for(std::chrono::seconds(1));
-        LOGGING("Moving to initial state");
-        getchar();
         movoRobotInterface_->moveToInitialJointAngles(initialJointAngles);
-
-        LOGGING("Moved to initial state");
-        LOGGING("Closing gripper");
-        getchar();
-        robotiQInterface_->closeGripper();
-        LOGGING("Opened gripper");
-        getchar();
     }
 
 
