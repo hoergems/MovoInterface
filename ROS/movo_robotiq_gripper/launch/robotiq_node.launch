@@ -1,0 +1,17 @@
+<!-- Launch file for jaco platform startup by default we don't use the experimental JTAS, this is just for teleop--> 
+<launch>
+
+    <arg name="local" default="true"/>
+
+    <machine name="movo1" address="movo1" user="movo" 
+                 env-loader="/home/movo/env.sh" default="true" unless="$(arg local)"/>   
+
+        <!-- Gripper node, enumeration should be performed with the robotiq tool using id=0 for right gripper and id=1 for left gripper,
+             if there is only one gripper it will default to id=0 or right gripper-->
+        <node pkg="movo_robotiq_gripper" type="robotiq_85_driver" name="robotiq_85_driver" respawn="true" output="screen">    
+            <param name="num_grippers" value="1"/>
+            <!--param name="num_grippers" value="2" if="$(optenv MOVO_HAS_LEFT_ROBOTIQ_GRIPPER false)"/-->
+            <param name="movo_ip" value="$(optenv MOVO_IP_ADDRESS 10.66.171.5)"/>
+        </node>
+    <!--/group-->
+</launch>
