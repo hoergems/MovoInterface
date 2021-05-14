@@ -127,6 +127,7 @@ private:
         VectorFloat initialJointAngles(initialState.begin(), initialState.begin() + 7);
         movoRobotInterface_->moveToInitialJointAngles(initialJointAngles);
         LOGGING("Done");
+        getchar();
     }
 
 
