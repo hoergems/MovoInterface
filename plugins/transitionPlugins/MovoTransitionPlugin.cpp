@@ -126,6 +126,7 @@ private:
         VectorFloat initialState = static_cast<const MovoTransitionPluginOptions *>(options_.get())->initialState;
         VectorFloat initialJointAngles(initialState.begin(), initialState.begin() + 7);
         movoRobotInterface_->moveToInitialJointAngles(initialJointAngles);
+        LOGGING("Done");
     }
 
 
