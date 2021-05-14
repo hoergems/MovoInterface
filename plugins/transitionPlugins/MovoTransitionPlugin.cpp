@@ -136,7 +136,11 @@ private:
         getchar();
         movoRobotInterface_->moveToInitialJointAngles(initialJointAngles);
 
-        LOGGING("DONE");
+        LOGGING("Moved to initial state");
+        LOGGING("Closing gripper");
+        getchar();
+        robotiQInterface_->closeGripper();
+        LOGGING("Opened gripper");
         getchar();
     }
 
